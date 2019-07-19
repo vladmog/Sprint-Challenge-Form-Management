@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Friend from './Friend';
+import Food from './Food';
 
 
-function Friends(props){
+function Foods(props){
     useEffect(() => {
         if(props.value){
             getData()
         }
     }, [props.value])
 
-    const [friends, setFriends] = useState([])
-    console.log("friends", friends)
+    const [foods, setFoods] = useState([])
+    console.log("foods", foods)
 
     const getData = () => {
         axios.get("http://localhost:5000/api/restricted/data", {
@@ -21,7 +21,7 @@ function Friends(props){
         })
             .then(res => {
                 console.log(res)
-                setFriends(res.data)
+                setFoods(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -32,13 +32,13 @@ function Friends(props){
 
     return(
         <div>
-            {friends.map(friend => {
+            {foods.map(food => {
                 return (
-                    <Friend friend = {friend} />
+                    <Food food = {food} />
                 )
             })}
         </div>
     )
 }
 
-export default Friends;
+export default Foods;

@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Friend(props) {
+function Food(props) {
     return (
         <div>
-            <h1>{props.friend.name}</h1>
-            <h2>{props.friend.course}</h2>
-            {props.friend.ingredients.map(ingredient => {
+            <h1>{props.food.name}</h1>
+            <h2>{props.food.course}</h2>
+            {props.food.ingredients.map(ingredient => {
                 return (
                       <div>
                           <p>{ingredient}</p>
@@ -16,4 +16,4 @@ function Friend(props) {
     )
 }
 
-export default Friend;
+export default Food;
