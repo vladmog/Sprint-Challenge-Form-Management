@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
 
 function LoginForm({ values, handleChange, isSubmitting, touched, errors, handleSubmit }) {
-    // values: comes from mapPropsToValues
-    // handleChange: pre-packaged changeHandler, functionality built into Field
-    // isSubmitting: state of API call, needs to be coded. Good for loading spinners
-    // touched: was element "touched"?
-    // errors: When schema / Yup not followed
-    // handleSubmit: pre-packaged submitHandler, functionality built into Form
     return (
       <div className="loginForm">
         <Form>
@@ -17,9 +12,6 @@ function LoginForm({ values, handleChange, isSubmitting, touched, errors, handle
             name = "username" 
             placeholder = "username"
             autoComplete = "off"
-            // Field has following functs built in 
-            // value = {values.name}
-            // onChange = {handleChange}
           />
           <Field 
             type="password" 
@@ -42,7 +34,6 @@ const FormikLoginForm = withFormik({
     return {
       username: username || "",
       password: password || "",
-      //these end up as "values" up top
     };
   },
 
@@ -51,12 +42,19 @@ const FormikLoginForm = withFormik({
       .min(1)
       .required(),
     password: Yup.string()
-      .min(6, "Password must be minimum of six characters long")
+      .min(1, "Password must be minimum of one characters long")
       .required("Password required"),
   }),
 
   handleSubmit(values, formikBag) {
-    
+    formikBag.resetForm();
+    formikBag.setSubmitting(true);
+    console.log(values)
+    axios.post("http://localhost:5000/api/register", values).then(res => {
+      console.log(res);
+      window.alert(`Welcome`);
+      formikBag.setSubmitting(false);
+    });
   }
 })(LoginForm);
 
