@@ -3,7 +3,14 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 
+
+
+
+
 function LoginForm({ values, handleChange, isSubmitting, touched, errors, handleSubmit }) {
+  
+  
+  
     return (
       <div className="loginForm">
         <Form>
@@ -46,12 +53,13 @@ const FormikLoginForm = withFormik({
       .required("Password required"),
   }),
 
-  handleSubmit(values, formikBag) {
+  handleSubmit(values, formikBag, setValue) {
     formikBag.resetForm();
     formikBag.setSubmitting(true);
     console.log(values)
     axios.post("http://localhost:5000/api/register", values).then(res => {
       console.log(res);
+      formikBag.props.setValue(res.data.token)
       window.alert(`Welcome`);
       formikBag.setSubmitting(false);
     });
